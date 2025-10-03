@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Temperature Converter</title>
+</head>
+<body>
+  <h2>Temperature Converter</h2>
+
+  <!-- Input box -->
+  <input type="number" id="temperature" placeholder="Enter value">
+
+  <!-- Conversion direction -->
+  <select id="conversionType">
+    <option value="CtoF">Celsius → Fahrenheit</option>
+    <option value="FtoC">Fahrenheit → Celsius</option>
+  </select>
+
+  <!-- Button -->
+  <button onclick="processor()">Process</button>
+
+  <!-- Result display -->
+  <p id="result"></p>
+
+  <script>
+    function processor() {
+      let temp = document.getElementById("temperature").value;
+      let type = document.getElementById("conversionType").value;
+
+      if (temp === "") {
+        document.getElementById("result").innerText = "⚠️ Please enter a number!";
+        console.log("⚠️ No value entered!");
+        return;
+      }
+
+      let result;
+
+      if (type === "CtoF") {
+        result = (parseFloat(temp) * 9/5) + 32;
+        document.getElementById("result").innerText = 
+          `${temp}°C = ${result.toFixed(2)}°F`;
+        console.log(`${temp}°C = ${result.toFixed(2)}°F`);
+      } 
+      else if (type === "FtoC") {
+        result = (parseFloat(temp) - 32) * 5/9;
+        document.getElementById("result").innerText = 
+          `${temp}°F = ${result.toFixed(2)}°C`;
+        console.log(`${temp}°F = ${result.toFixed(2)}°C`);
+      }
+    }
+  </script>
+</body>
+</html>
