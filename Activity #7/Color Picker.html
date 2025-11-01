@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Picker and Image Replacer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+      transition: background-color 0.3s ease;
+    }
+    h1 {
+      color: #333;
+    }
+    .control-box {
+      margin: 20px 0;
+      padding: 15px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      display: inline-block;
+      background-color: #f9f9f9;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #0078d7;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #contentDiv {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      display: inline-block;
+      min-width: 300px;
+    }
+    img {
+      margin-top: 15px;
+      max-width: 300px;
+      border-radius: 10px;
+    }
+    [contenteditable="true"] {
+      border: 1px dashed #999;
+      padding: 10px;
+      border-radius: 5px;
+      min-height: 60px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎨 Color Picker </h1>
+
+  <div class="control-box">
+    <p>Select a color:</p>
+    <input type="color" id="colorPicker"><br><br>
+
+    <button onclick="changeBackground()">Change Background Color</button>
+    <button onclick="changeParagraphColor()">Change Paragraph Color</button>
+    <button onclick="changeDivTextColor()">Change Text Inside &lt;div&gt; Color</button>
+    <br><br>
+
+    <label for="imageUpload"><strong>Replace Image:</strong></label><br>
+    <input type="file" id="imageUpload" accept="image/*">
+  </div>
+
+  <!-- The main div that can be edited and styled -->
+  <div id="contentDiv" contenteditable="true">
+    <p>You can type or edit text directly inside this div!</p>
+    <p>Try changing my color using the color picker above.</p>
+    <img id="mainImage" src="https://via.placeholder.com/300x200" alt="Default Image">
+  </div>
+
+  <script>
+    function changeBackground() {
+      const color = document.getElementById('colorPicker').value;
+      document.body.style.backgroundColor = color;
+    }
+
+    function changeParagraphColor() {
+      const color = document.getElementById('colorPicker').value;
+      document.querySelectorAll('p').forEach(p => p.style.color = color);
+    }
+
+    function changeDivTextColor() {
+      const color = document.getElementById('colorPicker').value;
+      document.getElementById('contentDiv').style.color = color;
+    }
+
+    // Replace image
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const imageURL = URL.createObjectURL(file);
+        document.getElementById('mainImage').src = imageURL;
+      }
+    });
+  </script>
+
+</body>
+</html>

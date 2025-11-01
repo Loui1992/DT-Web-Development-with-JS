@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 6 - Calculator with Counter & Closures</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .calculator {
+      background: #222;
+      border-radius: 15px;
+      padding: 20px;
+      width: 280px;
+      box-shadow: 0 0 10px #000;
+    }
+    input {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      text-align: right;
+      margin-bottom: 10px;
+      background: #333;
+      color: #0f0;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 15px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      background: #444;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #666;
+    }
+    .counter {
+      margin-top: 10px;
+      text-align: center;
+      color: #0f0;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" readonly />
+    <div class="buttons">
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button onclick="append('/')">÷</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button onclick="append('*')">×</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button onclick="append('-')">−</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="append('+')">+</button>
+
+      <button onclick="append('%')">%</button>
+      <button onclick="append('**')">^</button>
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="deleteLast()">DEL</button>
+    </div>
+    <div class="counter" id="counter">Calculations: 0</div>
+  </div>
+
+  <script>
+    // 🔒 Closure-based Counter
+    const counter = (() => {
+      let count = 0;
+      return {
+        increment: () => ++count,
+        getCount: () => count
+      };
+    })();
+
+    const display = document.getElementById('display');
+    const counterDisplay = document.getElementById('counter');
+
+    function append(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        const result = eval(display.value);
+        console.log(`Calculation: ${display.value} = ${result}`);
+        display.value = result;
+
+        // Increment and display the counter
+        const total = counter.increment();
+        counterDisplay.textContent = `Calculations: ${total}`;
+
+      } catch (error) {
+        console.error('Invalid expression:', error);
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
